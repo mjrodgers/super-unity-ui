@@ -5,16 +5,125 @@
 // Used to explore and open files in the current project.
 // Overrides: atom/tree-view
 
+@tree-view-height: @ui-line-height;
 
-.tree-view-resizer {
-  border-right: 1px solid @base-border-color;
+.tree-view-scroller {
+  background: @tree-view-background-color;
+
+  .is-blurred & {
+    background: #f8f8f8;
+
+    .selected:before {
+      background: greyscale(@background-color-highlight);
+    }
+  }
 }
 
 .tree-view {
-  color: @text-color;
-  background-color: @tree-view-background-color;
+  //font-size: @font-size - 1;
+  //-webkit-transform          : scale(1);
 
-  .list-item.selected {
-    color: @text-color-selected;
+  //-webkit-backface-visibility: hidden;
+  font-size: @font-size - 1;
+  //padding                    : 4px 0 4px 15px;
+  color    : @text-color;
+
+  .fullscreen & {
+    border-top: none;
+  }
+
+  &:focus {
+    .selected.list-item > .name,// files
+    .selected.list-nested-item > .list-item > .name,// folders
+
+    .selected.list-nested-item > .header:before {
+      // arrow icon
+      color: contrast(@text-color-selected);
+    }
+
+    .selected:before {
+      background: @background-color-selected;
+    }
+  }
+
+  li.selected {
+    color: @text-color;
+
+    &:before {
+      background: @background-color-highlight;
+      height    : @tree-view-height;
+    }
+  }
+
+  .status,
+  .status-added,
+  .status-info,
+  .status-modified,
+  .status-removed {
+    color: @text-color;
+  }
+
+  .status-added:after {
+    .text(success);
+  }
+
+  .status-modified:after {
+    .text(warning);
+  }
+
+  .status-removed:after {
+    .text(error);
+  }
+
+  .status-renamed:after {
+    .text(info);
+  }
+
+  .status-added:after,
+  .status-modified:after {
+    font-family           : 'Octicons Regular';
+    font-size             : 14px;
+    line-height           : 1;
+    content               : '\f06b';
+    position              : absolute;
+    right                 : 12px;
+    margin-top            : 4px;
+    height                : 10px;
+    width                 : 10px;
+    z-index               : 5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+
+  .expanded.modified:before,
+  .expanded.new:before {
+    display: none;
+  }
+
+  &:focus .selected.status-added:after,
+  &:focus .selected.status-modified:after {
+    color: #fff;
+  }
+
+  .status-modified:after {
+    content: '\f06d';
+  }
+
+  .collapsed.status-added:after,
+  .collapsed.status-modified:after {
+    margin-top: -17px;
+  }
+
+  .expanded.status-added:after,
+  .expanded.status-modified:after {
+    display: none;
+  }
+}
+
+.tree-view-resizer {
+  border-top: 0;
+
+  .tree-view-resize-handle {
+    width: 8px;
   }
 }

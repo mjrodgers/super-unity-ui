@@ -1,0 +1,265 @@
+
+// Modular Scale (1.125): http://www.modularscale.com/?1&em&1.125&web&table
+@ms-6: @ui-size * 2.027;
+@ms-5: @ui-size * 1.802;
+@ms-4: @ui-size * 1.602;
+@ms-3: @ui-size * 1.424;
+@ms-2: @ui-size * 1.266;
+@ms-1: @ui-size * 1.125;
+@ms-0: @ui-size * 1;
+@ms_1: @ui-size * 0.889;
+@ms_2: @ui-size * 0.790;
+
+.settings-view {
+  // Menu ------------------------------
+  .config-menu {
+    position: relative;
+    background: @level-2-color;
+    border-color:fade(@pane-item-border-color, 30%);
+    padding-top:0;
+
+    .button-area {
+      margin:@component-padding;
+    }
+
+    .panels-menu {
+      font-weight:600;
+
+      li {
+        border-bottom:1px solid fade(@pane-item-border-color, 20%);
+
+        a {
+          cursor: default;
+          padding:0 @component-padding;
+          line-height:@ui-line-height*1.5;
+        }
+      }
+    }
+  }
+  .nav {
+		& > li > a {
+			padding: @ui-padding/2 @ui-padding;
+			line-height: @ui-line-height;
+		}
+	}
+
+  // Sections
+
+  & > .panels {
+    background-color: @level-2-color;
+  }
+
+  .section-container {
+    max-width: @ui-size*60;
+  }
+
+  .sub-section {
+    margin-top:@component-padding;
+    clear:both;
+  }
+
+  .sub-section h3 {
+    border-top:1px solid fade(@pane-item-border-color, 20%);
+  }
+
+  .section, .section:first-child, .section:last-child {
+    padding:@component-padding;
+    border-color:fade(@pane-item-border-color, 20%);
+
+    .section-heading, .sub-section h3 {
+      border-bottom:1px solid fade(@pane-item-border-color, 20%);
+      background:@tool-panel-background-color;
+      font-size:@font-size+1;
+      font-weight:600;
+      margin:-@component-padding -@component-padding @component-padding;
+      padding:0 @component-padding;
+      line-height:@component-padding*3;
+      color:@text-color;
+      display: block;
+
+      .btn {
+        top:5px;
+        &.pull-right {
+          margin-left: @component-padding/2;
+        }
+      }
+
+      & + .container {
+        padding-top:0;
+      }
+    }
+
+    .updates-heading-container .section-heading {
+      border: 0;
+      background: none;
+      margin: 0;
+    }
+  }
+
+  div > section.section.settings-panel {
+    border-top:1px solid fade(@pane-item-border-color, 20%);
+  }
+
+  .themes-panel .control-group {
+    margin-top: @ui-padding*2;
+  }
+
+  // Titles
+
+  .section-heading-count {
+    margin-left: 1em;
+    margin-top: -1px;
+    color: @text-color-subtle;
+    padding: 0;
+    background-color: inherit;
+  }
+
+  .sub-section .sub-section-heading {
+    cursor: default;
+
+    &:after {
+      line-height: 36px;
+    }
+  }
+
+
+
+  .updates-heading-container {
+    border-bottom:1px solid fade(@pane-item-border-color, 20%);
+    background:@tool-panel-background-color;
+    margin: -@component-padding -@component-padding @component-padding;
+  }
+
+
+
+  //Components
+  .icon::before {
+    opacity:0.5;
+    color: @text-color-subtle;
+  }
+
+  .editor-container {
+    margin: @ui-padding 0;
+  }
+
+  .update-all-button {
+    font-size: .75em;
+  }
+
+  .install-button {
+    .btn-variant(@accent-bg-color);
+  }
+
+
+  .setting-title {
+    font-size: @ms-0;
+    //color: #222;
+  }
+
+  .checkbox {
+    padding-left: 0;
+
+    input[type="checkbox"] {
+      all: unset;
+      -webkit-appearance: checkbox;
+      cursor: default;
+      margin: 0 4px 0 0;
+      &:before {
+        content: none;
+      }
+      &:after {
+        content: none;
+      }
+    }
+
+    .setting-description {
+      padding-left: 16px;
+    }
+
+    label {
+      cursor: default;
+    }
+  }
+
+
+  .table {
+    th {
+      border:none;
+    }
+
+    td {
+      border-color:fade(@pane-item-border-color, 20%);
+    }
+  }
+
+  .packages {
+    .featured-message {
+      margin:@component-padding 0;
+    }
+
+    .search-container {
+      margin:-@component-padding 0 0;
+
+      .btn-group {
+        //margin-top:@component-padding;
+      }
+    }
+  }
+
+
+
+  .installed-package-view, .available-package-view, .package-update-view .thumbnail {
+    background:@tool-panel-background-color;
+    border-radius:5px;
+    border-color:fade(@pane-item-border-color, 20%);
+    padding:@component-padding;
+    margin-bottom:@component-padding;
+
+    .card-name {
+      font-weight:600;
+    }
+
+    .package-description {
+      color:@text-color-subtle;
+    }
+
+    .meta > div {
+      margin-top:@component-padding / 2;
+    }
+
+    .meta .author {
+      margin-left:8px;
+    }
+
+    .link {
+      margin:0;
+    }
+
+    .text {
+      margin:0 0 @component-padding
+    }
+  }
+
+  .themes-panel .control-group {
+    margin-top:@component-padding;
+  }
+
+  .breadcrumb {
+    border-bottom:1px solid fade(@pane-item-border-color, 20%);
+    background:@tool-panel-background-color;
+    font-size:13px;
+    font-weight:600;
+    margin:0;
+    padding:0 @component-padding;
+    line-height:@component-padding*3;
+    color:@text-color;
+
+    & + .section {
+      margin-top:-1px;
+    }
+  }
+
+  .package-update-view.col-md-6 {
+    padding:0 @component-padding;
+  }
+}

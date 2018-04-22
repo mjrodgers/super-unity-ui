@@ -7,20 +7,50 @@
 
 
 // Spinner -------------------
+@spinner-duration: 1.2s;
 
-.loading-spinner-large  { .loading-spinner(64px); }
-.loading-spinner-medium { .loading-spinner(48px); }
+.loading-spinner-tiny   { .loading-spinner(16px); &::before, &::after { border-width: 1px; } }
 .loading-spinner-small  { .loading-spinner(32px); }
-.loading-spinner-tiny   { .loading-spinner(16px); }
+.loading-spinner-medium { .loading-spinner(48px); }
+.loading-spinner-large  { .loading-spinner(64px); }
 
 .loading-spinner(@size) {
+  position: relative;
   display: block;
-  width: @size;
-  height: @size;
-  background-image: url(images/octocat-spinner-128.gif);
+  width: 1em;
+  height: 1em;
+  font-size: @size;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjNzI3MjcyIj4KICA8cGF0aCBvcGFjaXR5PSIuMjUiIGQ9Ik0xNiAwIEExNiAxNiAwIDAgMCAxNiAzMiBBMTYgMTYgMCAwIDAgMTYgMCBNMTYgNCBBMTIgMTIgMCAwIDEgMTYgMjggQTEyIDEyIDAgMCAxIDE2IDQiLz4KICA8cGF0aCBkPSJNMTYgMCBBMTYgMTYgMCAwIDEgMzIgMTYgTDI4IDE2IEExMiAxMiAwIDAgMCAxNiA0eiI+CiAgICA8YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgZnJvbT0iMCAxNiAxNiIgdG89IjM2MCAxNiAxNiIgZHVyPSIwLjhzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8L3BhdGg+Cjwvc3ZnPgo=);
   background-repeat: no-repeat;
-  background-size: @size @size;
+  background-size: cover;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 10; // prevent sibling elements from getting their own layers
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    -webkit-animation: spinner-animation @spinner-duration infinite;
+    -webkit-animation-fill-mode: backwards;
+  }
+  &::before {
+    border-color: @accent-color transparent transparent transparent;
+  }
+  &::after {
+    border-color: transparent lighten(@accent-color, 15%) transparent transparent;
+    -webkit-animation-delay: @spinner-duration/2;
+  }
+
   &.inline-block {
     display: inline-block;
   }
+}
+
+@-webkit-keyframes spinner-animation {
+    0% { transform: rotateZ(  0deg); -webkit-animation-timing-function: cubic-bezier(0, 0, .8, .2); }
+   50% { transform: rotateZ(180deg); -webkit-animation-timing-function: cubic-bezier(.2, .8, 1, 1); }
+  100% { transform: rotateZ(360deg); }
 }

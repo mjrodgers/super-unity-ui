@@ -1,3 +1,3 @@
-## 0.1.0 - First Release
-* Every feature added
-* Every bug fixed
+## 0.9.0 - Initial Version
+* Everything looks good to me
+* Haven't road tested

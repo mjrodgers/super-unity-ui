@@ -5,53 +5,230 @@
 // Displays selectable tabs above the editor.
 // Overrides: atom/tabs
 
+@tab-border: 1px solid darken(@ui-border,6%);
+@title-padding: .66em;
+@icon-padding-top: .5em; // 2.5 (total) - 1.5 (text) / 2
+@icon-padding-left: .5em;
+
+
 .tab-bar {
-  background-color: @tab-bar-background-color;
-  border-bottom: 1px solid @base-border-color;
+  position         : relative;
+  border-top       : 0;
+  border-bottom    : @tab-border;
+  border-radius    : 0;
+  font-size        : @font-size - 1;
+  height           : @ui-tab-height;
+  overflow-x       : auto;
+  overflow-y       : hidden;
+  background       : linear-gradient(@tab-background-color,#C7C6C7);
+  //background: @tab-bar-background-color;
+  width            : 100%;
+  padding          : 0;
+  -webkit-transform: scale(1);
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:empty {
+    display: none;
+  }
+
+  // Tab --------------------------------
   .tab {
-    color: @text-color;
-    height: @tab-height;
-    line-height: @tab-height;
-    font-size: @font-size;
-    border-right: 1px solid @tab-border-color;
+    position        : relative;
+    text-align      : center;
+    flex            : 1;
+    width           : 100%;
+    max-width       : 100%;
+    box-sizing      : border-box;
+    padding         : 0;
+    height          : inherit;
+    line-height     : @ui-tab-height;
+    font-size       : inherit;
+    color           : @tab-text-color;
     background-color: @tab-background-color;
-    &.active {
-      color: @text-color-selected;
+    //background : linear-gradient(#c2c0c2, #bbb9bb);
+    box-shadow      : inherit;
+    border-left     : @tab-border;
+    &:first-child {
+      border-left:none;
+    }
+    &:last-child {
+      border-right: none;
+    }
+
+    &.active,
+    &:hover.active {
+      color: @tab-text-color-active;
       background-color: @tab-background-color-active;
-    }
-
-
-    // Modified Icon (the circle) -------------------
-    &.modified:not(:hover) .close-icon {
-      top: 50%;
-      right: @component-padding + 4px; // 4px -> half of icon size
-      margin-top: -3px;
-      border-color: @text-color-info;
-    }
-    &.modified:hover .close-icon {
-      color: currentColor;
-    }
-
-
-    // Close Icon (the X) -------------------
-    .close-icon:hover {
-      color: @text-color-selected;
-    }
-    &.active .close-icon:hover {
-      color: @text-color;
-    }
-
-
-    // Dragging -------------------
-    // Styles get applied while dragging a tab
-    &.is-dragging {
-      background: darken(@tab-background-color, 10%);
-      border-color: transparent;
-      opacity: .5;
-      & .close-icon {
-        visibility: hidden;
+      //color              : #202020;
+      //background         : linear-gradient(#dedcde, #d7d5d7);
+      //border-width       : 1px 0 1px 1px;
+      //border-top-color   : #B5B4B5;
+      //border-left-color  : #a2a1a2;
+      //border-bottom-color: #A8A7A8;
+      width              : 100%;
+      flex               : 1;
+      & .title {
+        padding: 0;
       }
+    }
+    &:first-of-type {
+      border-left-color: transparent;
+    }
+
+    &:hover {
+      background: linear-gradient(#b9b7b9, #b2b0b2);
+    }
+
+    // Title -------------------
+
+    .title {
+      text-align: center;
+      margin: 0 @title-padding;
+    }
+
+    // VCS coloring ----------------------
+    &:not(.active) .status-added    { color: @tab-inactive-status-added; }
+    &:not(.active) .status-modified { color: @tab-inactive-status-modified; }
+
+    //Icon ---
+    .title.title:before {
+      margin-right: .3em;
+      width: auto;
+      height: auto;
+      line-height: 1;
+      font-size: @font-size;
+      vertical-align: .0625em; // Adjust center
+    }
+
+    .close-icon {
+      color        : rgb(93, 93, 93) !important;
+      opacity      : 0;
+      cursor       : default;
+      top          : @icon-padding-top;
+      left         : @icon-padding-left;
+      right        : auto;
+      z-index      : 2;
+      font-size    : 1em;
+      width        : 1.5em;
+      height       : 1.5em;
+      line-height  : 1.5;
+      text-align   : center;
+      border-radius: @component-border-radius;
+      display      : none;
+      transition   : opacity 0.2s ease-in-out, background 0.2s ease-in-out;
+
+      &:hover {
+        color: @accent-text-color;
+        //background-color: @accent-color; //REEEAALLLYYY ugly
+        background: linear-gradient(#a3a1a3, #9f9d9f);
+      }
+      &:active {
+        //background-color: fade(@accent-color, 50%);
+      }
+
+      &:before {
+        content    : '✕';
+        z-index: 1;
+        font-size: 1.1em;
+        vertical-align: -.05em; // Adjust center for the 0.1em font-size increase
+        width: auto;
+        height: auto;
+        pointer-events: none;
+        //width      : 16px;
+        //height     : 16px;
+        //line-height: 17px;
+        //font-size  : 11px;
+        //display    : block;
+      }
+
+
+    }
+
+  }
+
+  .tab.active .close-icon:hover {
+    background: linear-gradient(#c5c3c5, #c1bfc1);
+  }
+
+  &:hover .tab {
+    transition: background 0.2s linear;
+
+    .close-icon {
+      display: block;
+    }
+  }
+
+
+
+
+  .tab.modified:not(:hover) .close-icon {
+    opacity: 1;
+    top    : @icon-padding-top;
+    left   : @icon-padding-left;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5;
+    transform: scale(1);
+    display: inline-block;
+  }
+
+  .tab:hover .close-icon {
+    opacity: 1;
+  }
+
+
+  .is-blurred & {
+    background: #E4E4E4;
+
+    .tab {
+      border-right-color: #ADADAD;
+      border-left-color : #ADADAD;
+      color             : #727272;
+      background        : #ECECEC;
+    }
+
+    .tab.active,
+    .tab:hover.active {
+      background: #F5F5F5;
+    }
+  }
+
+  // Tabs in dock
+
+  atom-dock & {
+    .tab.active {
+      background-color: @tool-panel-background-color;
+    }
+  }
+
+
+  // Dragging ----------------------
+
+  .tab.is-dragging {
+    opacity: 0.5;
+
+    .close-icon,
+    &:before {
+      visibility: hidden;
+    }
+  }
+
+  .placeholder {
+    position      : relative;
+    pointer-events: none;
+    margin        : 0;
+    height        : @ui-tab-height;
+    background    : @background-color-info;
+
+    &:last-child {
+      margin-left: -2px;
+    }
+
+    &:first-child {
+      margin-left: 1px;
     }
   }
 }
